@@ -1,5 +1,5 @@
 # rpcodes - en-/decode open location codes
-# Notes:
+# Note:
 #   mapping is performed in js, thus requires V8
 library(V8)
 rpc <- list()  # wrapping all functions as methods of rpc
@@ -11,6 +11,7 @@ rpc$ng$source('https://cdnjs.cloudflare.com/ajax/libs/openlocationcode/1.0.1/ope
 # @param {num} prcs Precision: 10..normal, 11..extra
 # @return {str} +code for given location
 rpc$encode <- function(lat=NULL, lon=NULL, prcs=10) {
-  cmd <- ...  # 'OpenLocationCode.encode(latitude, longitude, codeLength)' lets pray R has tmplate strings!!
+  if (missing(lat)|missing(lon)) stop('no input!')
+  cmd <- paste0('OpenLocationCode.encode(', lat, ',', lon, ',', prcs, ')')
   return(rpc$ng$eval(cmd))
 }
