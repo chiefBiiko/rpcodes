@@ -1,4 +1,4 @@
-# rpcodes - en-/decode open location codes
+# rpcodes - working with open location codes in R
 # Note:
 #   mapping is performed in js, thus requires V8
 library(V8)
@@ -15,3 +15,18 @@ rpc$encode <- function(lat=NULL, lon=NULL, prcs=10) {
   cmd <- paste0('OpenLocationCode.encode(', lat, ',', lon, ',', prcs, ')')
   return(rpc$ng$eval(cmd))
 }
+# Decodes a +code to a location object
+# @param {str} code +code to decode
+# @return {list} The OpenLocationCode.CodeArea object
+rpc$decode <- function(code=NULL) {
+  if (missing(code)) stop('no input!')
+  rpc$ng$assign('tmp', JS(code))
+  cmd <- paste0('OpenLocationCode.decode(', tmp, ')')
+  rpc$ng$assign('rtn', JS(cmd))
+  return(rpc$ng$get('rtn'))
+}
+#rpc$decode <- function(code=NULL) {
+#  if (missing(code)) stop('no input!')
+#  cmd <- paste0('OpenLocationCode.decode(', code, ')')
+#  return(rpc$ng$eval(cmd))
+#}
