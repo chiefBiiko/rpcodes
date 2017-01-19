@@ -12,21 +12,12 @@ rpc$ng$source('https://cdnjs.cloudflare.com/ajax/libs/openlocationcode/1.0.1/ope
 # @return {str} +code for given location
 rpc$encode <- function(lat=NULL, lon=NULL, prcs=10) {
   if (missing(lat)|missing(lon)) stop('no input!')
-  cmd <- paste0('OpenLocationCode.encode(', lat, ',', lon, ',', prcs, ')')
-  return(rpc$ng$eval(cmd))
+  return(rpc$ng$call('OpenLocationCode.encode', lat, lon, prcs))
 }
 # Decodes a +code to a location object
 # @param {str} code +code to decode
 # @return {list} The OpenLocationCode.CodeArea object
 rpc$decode <- function(code=NULL) {
   if (missing(code)) stop('no input!')
-  rpc$ng$assign('tmp', JS(code))
-  cmd <- paste0('OpenLocationCode.decode(', tmp, ')')
-  rpc$ng$assign('rtn', JS(cmd))
-  return(rpc$ng$get('rtn'))
+  return(rpc$ng$call('OpenLocationCode.decode', code))
 }
-#rpc$decode <- function(code=NULL) {
-#  if (missing(code)) stop('no input!')
-#  cmd <- paste0('OpenLocationCode.decode(', code, ')')
-#  return(rpc$ng$eval(cmd))
-#}
