@@ -1,5 +1,5 @@
 # rpcodes - working with open location codes in R
-if (! 'V8' %in% installed.packages()) install.packages('V8')
+if (!'V8' %in% installed.packages()) install.packages('V8')
 library(V8)
 rpc <- list()  # wrapping all functions as methods of rpc
 rpc$ng <- v8()  # start the V8 engine
